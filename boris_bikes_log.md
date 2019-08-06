@@ -23,7 +23,7 @@
     ```
 * [X] Explain the error to your pair partner
 
-    This failure is happening because station.release_bike returns nil instead of an instance of the Bike class. You have to   alter the DockingStation class so release_bike returns a new instance of the Bike class.
+    This failure is happening because `station.release_bike` returns `nil` instead of an instance of the `Bike` class. You have to   alter the `DockingStation` class so `release_bike` returns a new instance of the `Bike` class.
 
 
 
@@ -36,7 +36,7 @@
      end
      ```
   
-     be_working - refers to the .working? method in the Bike class and checks if the return value is true
+     `be_working` - refers to the `.working?` method in the `Bike` class and checks if the return value is `true`
   
   * [X] Make this test pass
   
@@ -45,8 +45,8 @@
         Failure/Error: expect(bike).to be_working
           expected nil to respond to `working?`
      ```
-     --- release bike is returning nil as there is nothing inside the method, then we are trying to run the .working? method on nil
-     So, release_bike method needs to return an instance of Bike. (.working? method is still blank)
+     --- `release_bike` is returning `nil` as there is nothing inside the method, then we are trying to run the `.working` method on `nil`
+     So, `release_bike` method needs to return an instance of `Bike`. (`.working?` method is still blank)
 
      ```
      class DockingStation
@@ -64,9 +64,9 @@
         Failure/Error: expect(bike).to be_working
           expected `#<Bike:0x00007fdb84119f10>.working?` to return true, got nil
      ```
-     --- expecting the .working? method on bike to return true, it is returning nil as there is nothing in the .working? method
+     --- expecting the `.working?` method on bike to return `true`, it is returning `nil` as there is nothing in the `.working?` method
 
-     The bare minimum to make the test pass is to return true inside the .working? method
+     The bare minimum to make the test pass is to return `true` inside the `.working?` method
 
      ```
      class Bike
