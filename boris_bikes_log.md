@@ -88,3 +88,41 @@
    2.6.3 :005 > bike.working?
     => true 
     ```
+    
+    ## Challenge 11
+    
+    * [X] Write a feature test for docking a bike at a docking station
+    
+        ```
+        2.6.3 :004 > require './lib/docking_station'
+         => true 
+        2.6.3 :005 > bike = Bike.new
+         => #<Bike:0x00007feb251ad390> 
+        2.6.3 :006 > docking_station = DockingStation.new
+         => #<DockingStation:0x00007feb251b6cd8> 
+        2.6.3 :007 > docking_station.dock(bike)
+        ```
+        --- This returns a `NoMethodError` as there is no method called `dock`
+    
+    
+    * [X] Write a unit test for the method you need to add to DockingStation to make docking possible
+    
+        ```
+        it 'dock bike at docking station' do
+        expect(subject).to respond_to(:dock).with(1).argument
+      end
+        ```
+        ---  We want to make sure that the instance variable responds to `dock` method and takes 1 argument
+ 
+    
+    * [X] Pass both tests
+    
+    ```
+      def dock(bike)
+  end
+  ```
+  
+  --- This code is added to `DokingStation` class, this makes both test pass. As `dock` method is created and allows 1 argument - as the test specifies.
+    
+    
+    * [ ] Use an instance variable with attr_reader to do a full test-implementation cycle for the second User Story above
