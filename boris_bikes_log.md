@@ -257,8 +257,37 @@
   attr_reader :bike
   ```
   
+  ## Challenge 12
   
+  ```
+    As a member of the public,
+    So that I am not confused and charged unnecessarily,
+    I'd like docking stations not to release bikes when there are none available.
+  ```
   
+ * [X] Feature test the feature you are building using irb
+ 
+    ```
+    2.6.3 :001 > require './lib/docking_station'
+     => true 
+    2.6.3 :002 > docking_station = DockingStation.new
+     => #<DockingStation:0x00007f81e3069980> 
+    2.6.3 :003 > docking_station.release_bike
+     => #<Bike:0x00007f81e30893c0>
+    ```
+    --- What we actually want the output to be is "No bikes available" error
+ 
+ * [ ] Use {} and raise_error syntax in your RSpec unit test to test exception raising
+ 
+ 
+ 
+ 
+ 
+ 
+ * [ ] Use the fail or raise keyword to raise an exception in your code (not your tests)
+ * [ ] Make the test pass by raising an exception
+ * [ ] Explain why you use curly braces in the RSpec error handling syntax to your partner
+ * [ ] Feature-test the feature again.
   
   
   
