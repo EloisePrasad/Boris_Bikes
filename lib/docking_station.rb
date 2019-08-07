@@ -1,6 +1,11 @@
-require './bike'
+require './lib/bike'
 class DockingStation
+
   def release_bike
     bike = Bike.new
   end
+
+  def dock(bike)
+  end
+
 end
