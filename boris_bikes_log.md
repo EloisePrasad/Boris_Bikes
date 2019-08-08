@@ -275,19 +275,87 @@
     2.6.3 :003 > docking_station.release_bike
      => #<Bike:0x00007f81e30893c0>
     ```
-    --- What we actually want the output to be is "No bikes available" error
+    --- What we actually want the output to be is "No bikes available" error, we don't get this because at this point our `release_bike` method just makes a new bike every time. But we actually want it to start empty and only release a bike that had already been docked.
+    --- Therefore, we need to write a unit test that tests this (a bike is only released if one has been docked)
+    ```
+    describe '#release_bike' do
+     it 'releases a bike' do
+       bike = Bike.new
+       subject.dock(bike)
+       expect(subject.release_bike).to eq bike
+     end
+    ```
+    --- This is a nested `describe` 
+    
+    --- We need to chnage the `.release_bike` method to the below. So that it starts empty and only releases a bike if one has been docked
+    ```
+    def release_bike
+      @bike
+    end
+    ```
+    
+    
+    --- When we run `rspec` this error occurs. This is because `@bike` doesn't contain anything becuase we haven't docked the bike first (remember we have cahnged it, so that `.release_bike` is empty until a bike is docked.
+    
+    ```
+    DockingStation releases working bikes
+     Failure/Error: expect(bike).to be_working
+       expected nil to respond to `working?`
+    ```
+    --- Therefore, this previous unit test needs to change to the below
+    
+   ```
+     it 'releases working bikes' do
+    bike = Bike.new
+    subject.dock(bike)
+    expect(subject.release_bike).to be_working
+    end
+   ```
+   
+   --- rspec passes but we still are not getting the error we want in the feature test
+    
  
- * [ ] Use {} and raise_error syntax in your RSpec unit test to test exception raising
+ * [X] Use {} and raise_error syntax in your RSpec unit test to test exception raising
  
+    ```
+    it 'raises an error when there are no bikes available' do
+      expect { subject.release_bike }.to raise_error 'No bikes available'
+    end
+    ```
+    --- This unit test is added to test the error we want to occur when there isn't a bike in the docking station to be released when `.release_bike` is called
+    --- { } these are used when we are using a code block for errors insetad of testing the value of the argument - then we use normal ( )
  
- 
- 
- 
- 
- * [ ] Use the fail or raise keyword to raise an exception in your code (not your tests)
- * [ ] Make the test pass by raising an exception
- * [ ] Explain why you use curly braces in the RSpec error handling syntax to your partner
+ * [X] Use the fail or raise keyword to raise an exception in your code (not your tests)
+    ```
+    def release_bike
+    fail 'No bikes available' unless @bike
+    @bike
+    end
+    ```
+    --- This line is added to the code block to make sure there is an error when there is no bike in the docking station.
+    --- The `fail` keyword raises a Runtime Error, with the message that is given
+    --- `unless` gives a condition that needs to be met, if not the error will occur - in this case 'unless `@bike` is assigned to something, raise the error'
+
  * [ ] Feature-test the feature again.
+ 
+    --- The feature test works now
+    
+    ```
+    2.6.3 :002 > require './lib/docking_station'
+     => true 
+    2.6.3 :003 > bike = Bike.new
+     => #<Bike:0x00007fd2df0570f8> 
+    2.6.3 :004 > docking_station = DockingStation.new
+     => #<DockingStation:0x00007fd2df090e70> 
+    2.6.3 :005 > docking_station.release_bike
+    Traceback (most recent call last):
+            5: from /Users/student/.rvm/rubies/ruby-2.6.3/bin/irb:23:in `<main>'
+            4: from /Users/student/.rvm/rubies/ruby-2.6.3/bin/irb:23:in `load'
+            3: from /Users/student/.rvm/rubies/ruby-2.6.3/lib/ruby/gems/2.6.0/gems/irb-1.0.0/exe/irb:11:in `<top (required)>'
+            2: from (irb):5
+            1: from /Users/student/projects/Boris_Bikes/lib/docking_station.rb:7:in `release_bike'
+    RuntimeError (No bikes available)
+```
   
   
   
